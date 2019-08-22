@@ -3,7 +3,7 @@ package com.sdyin.dsag.arithmetic.alg.sort;
 import java.util.Arrays;
 
 /**
- * 归并排序: 时间复杂度 n(logn)
+ * 归并排序: 时间复杂度 n(logn),稳定排序
  * 分治: 先递归拆分 再合并
  * @Description
  * @Author liuye
@@ -12,13 +12,19 @@ import java.util.Arrays;
 public class MergeSort {
 
     public static void main(String[] args) throws Exception {
-        int[] arrys = {18,14,9,55,24,3,58,99};
+        int[] arrys = {18,3,14,9,55,24,3,58,99};
         int[] result = sort(arrys);
         for (int i = 0; i < result.length; i++) {
             System.out.print(result[i]+" ");
         }
     }
 
+    /**
+     * 递归拆分,直至大小数量小于二
+     * @param sourceArray
+     * @return
+     * @throws Exception
+     */
     public static int[] sort(int[] sourceArray) throws Exception {
         // 对 arr 进行拷贝，不改变参数内容
         int[] arr = Arrays.copyOf(sourceArray, sourceArray.length);
@@ -34,6 +40,12 @@ public class MergeSort {
         return merge(sort(left), sort(right));
     }
 
+    /**
+     * 合并排序
+     * @param left
+     * @param right
+     * @return
+     */
     protected  static int[] merge(int[] left, int[] right) {
         int[] result = new int[left.length + right.length];
         int i = 0;
