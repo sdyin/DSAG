@@ -1,4 +1,4 @@
-package com.sdyin.dsag.arithmetic.alg.sort.dp;
+package com.sdyin.dsag.arithmetic.alg.dp;
 
 /**
  * @Description 求不同路径走法之和
