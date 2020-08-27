@@ -1,5 +1,7 @@
 package com.sdyin.dsag.arithmetic.ds.binary.tree.traversal;
 
+import com.sdyin.dsag.arithmetic.ds.binary.TreeNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
