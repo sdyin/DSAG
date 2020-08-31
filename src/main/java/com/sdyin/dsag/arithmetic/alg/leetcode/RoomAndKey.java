@@ -1,20 +1,12 @@
 package com.sdyin.dsag.arithmetic.alg.leetcode;
 
 import com.google.common.collect.Lists;
-import org.checkerframework.checker.i18nformatter.qual.I18nChecksFormat;
 
-import javax.xml.crypto.Data;
-import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import static java.util.stream.Collectors.toList;
 
 /**
- * @Description TODO 解答有误
+ * @Description TODO 广度优先待补充
  * leetcode 841. 钥匙和房间
  * 有 N 个房间，开始时你位于 0 号房间。每个房间有不同的号码：0，1，2，...，N-1，并且房间里可能有一些钥匙能使你进入下一个房间。
  *
@@ -31,27 +23,31 @@ import static java.util.stream.Collectors.toList;
  **/
 public class RoomAndKey {
 
+    static boolean[] vis;
+    static int num;
+
     public static boolean canVisitAllRooms(List<List<Integer>> rooms) {
         int roomSize = rooms.size();
-        List<Integer> list = new ArrayList<>();
-        IntStream.range(1, roomSize).map(item -> Integer.valueOf(item)).forEach(data -> {
-            list.add(data);
-        });
+        vis = new boolean[roomSize];
+        num = 0;
+        dfs(rooms, 0);
+        return num == roomSize;
+    }
 
-        list.stream().forEach(data -> System.out.println("房间 " + data));
-
-        List<Integer> roomList = rooms.stream().reduce((list1, list2) -> {
-            list1.addAll(list2);
-            return list1;
-        }).orElse(new ArrayList<Integer>());
-
-        roomList = roomList.stream().distinct().collect(Collectors.toList());
-
-        roomList.stream().forEach(data -> System.out.println("可达房间 " + data));
-        if(roomList.containsAll(list)){
-            return true;
+    /**
+     * 深度优先
+     * @param rooms
+     * @param x
+     */
+    private static void dfs(List<List<Integer>> rooms, int x) {
+        //有钥匙
+        vis[x] = true;
+        num++;
+        for (int i = 0; i < rooms.get(x).size(); i++) {
+            if(!vis[rooms.get(x).get(i)]){
+                dfs(rooms, rooms.get(x).get(i));
+            }
         }
-        return false;
     }
 
     public static void main(String[] args) {
