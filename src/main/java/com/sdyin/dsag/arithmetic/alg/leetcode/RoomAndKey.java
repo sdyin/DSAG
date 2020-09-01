@@ -3,7 +3,9 @@ package com.sdyin.dsag.arithmetic.alg.leetcode;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * @Description TODO 广度优先待补充
@@ -18,6 +20,7 @@ import java.util.List;
  *
  * 如果能进入每个房间返回 true，否则返回 false。
  *
+ * 深度优先dfs -> 递归, 广度优先 -> 循环
  * @Author liuye
  * @Date 2020/8/31 17:06
  **/
@@ -50,6 +53,29 @@ public class RoomAndKey {
         }
     }
 
+    /**
+     * 广度优先
+     * @param rooms
+     */
+    private static boolean bfs(List<List<Integer>> rooms){
+        int roomSize = rooms.size();
+        int num = 0;
+        boolean[] visit = new boolean[roomSize];
+        visit[0] = true;
+        Queue queue = new LinkedList<>();
+        queue.offer(0);
+        while( !queue.isEmpty()){
+            int x = (int)queue.poll();
+            for(Integer value: rooms.get(x)){
+                if(!visit[value]){
+                    visit[value] = true;
+                    num++;
+                }
+            }
+        }
+        return num == roomSize;
+    }
+
     public static void main(String[] args) {
         List<Integer> list1 = Lists.newArrayList(1, 3);
         List<Integer> list2 = Lists.newArrayList(3, 0,1);
@@ -61,7 +87,12 @@ public class RoomAndKey {
         rooms.add(list2);
         rooms.add(list3);
         rooms.add(list4);
-        boolean b = canVisitAllRooms(rooms);
+
+        //深度优先dfs测试
+        //boolean b = canVisitAllRooms(rooms);
+
+        //广度优先bfs测试
+        boolean b = bfs(rooms);
         System.out.println(b);
     }
 }
