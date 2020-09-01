@@ -65,11 +65,14 @@ public class RoomAndKey {
         Queue queue = new LinkedList<>();
         queue.offer(0);
         while( !queue.isEmpty()){
+            //num 初始为0时，放在while下面，初始为1时，放在for循环 if条件语句中
+            num++;
             int x = (int)queue.poll();
             for(Integer value: rooms.get(x)){
                 if(!visit[value]){
                     visit[value] = true;
-                    num++;
+                    queue.offer(value);
+
                 }
             }
         }
