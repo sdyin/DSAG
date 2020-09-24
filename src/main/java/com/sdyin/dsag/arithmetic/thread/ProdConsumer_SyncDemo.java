@@ -1,7 +1,5 @@
 package com.sdyin.dsag.arithmetic.thread;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * @Description 生产消费者模型-Synchronized 版本
  * @Author liuye
@@ -52,25 +50,28 @@ class Resource {
 
     public void prod() throws InterruptedException {
         synchronized (resource) {
-            while (num == 0) {
-                System.out.println(Thread.currentThread().getName() + "开始生产");
-                Thread.sleep(100);
-                num++;
-                resource.notifyAll();
+            //防止虚假唤醒，所以wait操作放在 while循环中，
+            // 被唤醒后会继续执行while条件判断，用if则不会再判断，而是往下走
+            // 多个生产者和消费者模型下会有这种问题
+            while (num != 0) {
+                resource.wait();
             }
-            resource.wait(2000);
+            System.out.println(Thread.currentThread().getName() + "开始生产");
+            Thread.sleep(100);
+            num++;
+            resource.notifyAll();
         }
     }
 
     public void consumer() throws InterruptedException {
         synchronized (resource) {
-            while (num == 1) {
-                System.out.println(Thread.currentThread().getName() + "开始消费");
-                Thread.sleep(100);
-                num--;
-                resource.notifyAll();
+            while (num != 1) {
+                resource.wait();
             }
-            resource.wait(2000);
+            System.out.println(Thread.currentThread().getName() + "开始消费");
+            Thread.sleep(100);
+            num--;
+            resource.notifyAll();
         }
     }
 
