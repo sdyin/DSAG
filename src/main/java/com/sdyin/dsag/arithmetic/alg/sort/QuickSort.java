@@ -37,20 +37,9 @@ public class QuickSort {
         return arr;
     }
 
-
+    //此种方式为挖坑填数方式
     private static int partition(int[] arr, int low, int high) {
-        // 设定基准值（pivot）
-        /* //暂未理解
-        int pivot = left;
-        int index = pivot + 1;
-        for (int i = index; i <= right; i++) {
-            if (arr[i] < arr[pivot]) {
-                swap(arr, i, index);
-                index++;
-            }
-        }
-        swap(arr, pivot, index - 1);
-        return index - 1;*/
+        // 设定基准值（pivot）,初始取最左元素
         int tmp = arr[low];
         while (low < high) {
             // 当队尾的元素大于等于基准数据时,向前挪动high指针
@@ -59,6 +48,7 @@ public class QuickSort {
             }
             // 如果队尾元素小于tmp了,需要将其赋值给low
             arr[low] = arr[high];
+
             // 当队首元素小于等于tmp时,向前挪动low指针
             while (low < high && arr[low] <= tmp) {
                 low++;
