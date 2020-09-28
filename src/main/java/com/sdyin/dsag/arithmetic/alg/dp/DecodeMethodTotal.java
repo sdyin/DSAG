@@ -1,7 +1,5 @@
 package com.sdyin.dsag.arithmetic.alg.dp;
 
-import sun.security.util.Length;
-
 /**
  * @Description 解码方法
  * 一条包含字母 A-Z 的消息通过以下方式进行了编码：

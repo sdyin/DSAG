@@ -1,6 +1,5 @@
 package com.sdyin.dsag.arithmetic.thread;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

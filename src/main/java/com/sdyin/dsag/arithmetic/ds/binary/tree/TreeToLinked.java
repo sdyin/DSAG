@@ -1,7 +1,6 @@
 package com.sdyin.dsag.arithmetic.ds.binary.tree;
 
 import com.sdyin.dsag.arithmetic.ds.binary.TreeNode;
-import sun.reflect.generics.tree.Tree;
 
 /**
  * @Description 114.二叉树展开为单链表
