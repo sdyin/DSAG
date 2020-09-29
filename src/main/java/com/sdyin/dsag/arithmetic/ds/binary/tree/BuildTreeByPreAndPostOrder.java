@@ -41,7 +41,7 @@ public class BuildTreeByPreAndPostOrder {
         TreeNode rootNode = new TreeNode(rootVal);
         int index = 0;
         //inEnd是下标索引，所以这里是<= 而不是 <
-        for (int i = 0; i <= inEnd; i++) {
+        for (int i = inStart; i <= inEnd; i++) {
             if(inorder[i] == rootVal){
                 index = i;
                 break;
