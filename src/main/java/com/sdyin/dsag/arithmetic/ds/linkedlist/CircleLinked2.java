@@ -40,6 +40,7 @@ public class CircleLinked2 {
         }
 
         //第一次相遇后，快指针复原为头节点，快慢指针均只走一步,相等时即为环形链表起点
+        //当第一次相遇后，假设头节点到环形链表起点距离为a, 慢指针再走a步,肯定到达环形链表起点
         fast = head;
         while(fast != slow){
             fast = fast.next;
