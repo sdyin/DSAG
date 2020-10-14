@@ -2,7 +2,6 @@ package com.sdyin.dsag.arithmetic.ds.binary.tree;
 
 import com.sdyin.dsag.arithmetic.ds.binary.TreeNode;
 import org.checkerframework.checker.units.qual.min;
-import sun.awt.SunHints;
 
 import javax.validation.constraints.Min;
 import java.util.ArrayList;
