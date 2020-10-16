@@ -50,4 +50,41 @@ class ListNode {
       ListNode() {}
       ListNode(int val) { this.val = val; }
       ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-  }
+
+    /**
+     * 测试链表节点修改
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        ListNode head = new ListNode(1);
+        ListNode node1 = new ListNode(2);
+        ListNode node2 = new ListNode(3);
+
+        node1.next = node2;
+        head.next = node1;
+
+        System.out.println("head init:" + printValue(head));
+
+        ListNode t1 = head;
+        ListNode t2 = head;
+
+        t1.next.next = null;
+        System.out.println("head after t1 change:" + printValue(head));
+        System.out.println("t2 after t1 change:" + printValue(t2));
+
+        t2.next = null;
+        System.out.println("head after t2 change:" + printValue(head));
+        System.out.println("after t2  change:" + printValue(t2));
+
+    }
+
+    private static String printValue(ListNode node) {
+          StringBuffer sb = new StringBuffer();
+          while(node != null){
+              sb.append(node.val + "--");
+              node = node.next;
+          }
+          return sb.toString();
+    }
+}
