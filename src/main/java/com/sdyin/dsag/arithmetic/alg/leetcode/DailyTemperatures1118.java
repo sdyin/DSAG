@@ -15,13 +15,19 @@ import java.util.Stack;
  **/
 public class DailyTemperatures1118 {
 
+    /**
+     * 思路
+     * @param nums
+     * @return
+     */
     private static int[] dailyTemperatures(int[] nums){
 
         int[] res = new int[nums.length];
         Stack<Integer> stack = new Stack<>();
 
         for (int i = nums.length - 1; i >= 0 ; i--) {
-
+            //思路 如果当前下标索引处值大于 栈中第一个元素，则移除栈顶元素
+            //如果当前下标索引处值小于 栈中第一个元素，则当前元素入栈
             while(!stack.isEmpty() && nums[stack.peek()] < nums[i]){
                 stack.pop();
             }
