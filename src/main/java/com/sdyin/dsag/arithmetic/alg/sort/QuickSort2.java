@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class QuickSort2 {
 
     public static void main(String[] args) {
-        int arr[] = {10,7,8,2,5,3,6,11,34};
+        int arr[] = {10,7,8,2,5,42,56,8,4,6,7,2,2,6,3,6,11,34};
         sort(arr);
     }
 
