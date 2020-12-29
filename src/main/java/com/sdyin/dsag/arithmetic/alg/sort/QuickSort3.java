@@ -33,7 +33,7 @@ public class QuickSort3 {
             }
             arr[low] = arr[high];
 
-            while (low < high && arr[low] >= temp){
+            while (low < high && arr[low] <= temp){
                 low++;
             }
             arr[high] = arr[low];
@@ -45,9 +45,7 @@ public class QuickSort3 {
     public static void main(String[] args) {
         int[] arr = {6,1,7,2,5,32,13,8,2};
         final int[] result = sort(arr);
-        for (int i = 0;i<result.length;i++){
-            System.out.print(result[i] + " ");
-        }
+        Arrays.stream(result).forEach(System.out::println);
     }
 
 
