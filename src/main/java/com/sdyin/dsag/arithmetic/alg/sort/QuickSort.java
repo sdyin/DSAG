@@ -58,7 +58,7 @@ public class QuickSort {
 
         }
         // 跳出循环时low和high相等,此时的low或high就是tmp的正确索引位置
-        // 由原理部分可以很清楚的知道low位置的值并不是tmp,所以需要将tmp赋值给arr[low]
+        // 在挖坑填数过程中，pivot的值会临时丢弃，直到low == high,而且此时low和high是最后一次调换的重复的数，此位置正确的值应该是tmp
         arr[low] = tmp;
         // 返回tmp的正确位置
         return low;
@@ -66,21 +66,9 @@ public class QuickSort {
 
     }
 
-    /**
-     * 交换
-     * @param arr
-     * @param i
-     * @param j
-     */
-    private static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
 
     public static void main(String[] args) {
-        int[] arrays = {1,34,56,22,8,1,46,99};
+        int[] arrays = {9,34,56,22,8,1,46,99};
         int[] result = sort(arrays);
         for (int i = 0;i<result.length;i++){
             System.out.print(result[i] + " ");
