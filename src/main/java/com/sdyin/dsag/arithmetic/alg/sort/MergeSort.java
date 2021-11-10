@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * 归并排序: 时间复杂度 n(logn),稳定排序
- * 分治: 先递归拆分 再合并
+ * 分治: 先递归拆分 再比较合并
  * @Description
  * @Author liuye
  * @Date 2019/8/22 11:29
