@@ -18,8 +18,8 @@ public class QuickSort2 {
     private static int[] quickSort(int[] arr, int left, int right) {
         if (left < right) {
             int pivot = findPivot(arr, left, right);
-            // 左右需要间隔基准值所在下标索引，不然每次
             quickSort(arr, left, pivot - 1);
+            // 右节点需要间隔基准值所在下标索引 + 1，不然每次右节点会死循环递归
             quickSort(arr, pivot + 1, right);
         }
         return arr;
@@ -32,6 +32,7 @@ public class QuickSort2 {
             //满足条件,则移动指针位置
             while (left < right && arr[right] >= tmp) {
                 --right;
+                System.out.println("right:" + right);
             }
             //不满足条件时,即右节点当前值转移到左边。
             arr[left] = arr[right];
