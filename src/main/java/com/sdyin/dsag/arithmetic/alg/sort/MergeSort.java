@@ -14,9 +14,7 @@ public class MergeSort {
     public static void main(String[] args) throws Exception {
         int[] arrys = {18,3,14,9,55,24,3,58,99};
         int[] result = sort(arrys);
-        for (int i = 0; i < result.length; i++) {
-            System.out.print(result[i]+" ");
-        }
+        Arrays.stream(result).forEach(System.out::println);
     }
 
     /**

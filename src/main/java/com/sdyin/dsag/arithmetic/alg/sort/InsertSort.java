@@ -1,5 +1,7 @@
 package com.sdyin.dsag.arithmetic.alg.sort;
 
+import java.util.Arrays;
+
 /**
  * @Description 插入排序示例
  * @Author liuye
@@ -10,9 +12,7 @@ public class InsertSort {
     public static void main(String[] args) {
         int[] arrays = {1, 34, 56, 22, 8, 1, 46, 99};
         int[] result = insertSort(arrays);
-        for (int i = 0; i < result.length; i++) {
-            System.out.print(result[i] + " ");
-        }
+        Arrays.stream(result).forEach(System.out::println);
     }
 
 

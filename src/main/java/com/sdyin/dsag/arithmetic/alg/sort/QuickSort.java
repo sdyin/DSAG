@@ -70,8 +70,6 @@ public class QuickSort {
     public static void main(String[] args) {
         int[] arrays = {9,34,56,22,8,1,46,99};
         int[] result = sort(arrays);
-        for (int i = 0;i<result.length;i++){
-            System.out.print(result[i] + " ");
-        }
+        Arrays.stream(result).forEach(System.out::println);
     }
 }
