@@ -1,6 +1,7 @@
 package com.sdyin.dsag.arithmetic.interview;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -36,10 +37,6 @@ public class ThreadAlternate {
 
         t2 = new Thread(() -> {
             for (int i = 0; i < num.length; i++) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                }
                 LockSupport.park();
                 System.out.println(num[i]);
                 LockSupport.unpark(t1);
@@ -57,7 +54,7 @@ public class ThreadAlternate {
     /**
      * 使用CAS自旋锁 + volatile 实现
      */
-    private static void ByCASAndVolatile(){
+    private static void byCASAndVolatile(){
         char[] num = "1234567".toCharArray();
         char[] str = "ABCDEFG".toCharArray();
         new Thread(() -> {
@@ -184,10 +181,36 @@ public class ThreadAlternate {
         }).start();
     }
 
+    private static BlockingQueue<Integer> bq = new ArrayBlockingQueue<>(1);
     /**
-     * TODO 通过阻塞队列方式
+     * 通过阻塞队列方式
      */
     private static void byBlockingQueue(){
+        char[] num = "1234567".toCharArray();
+        char[] str = "ABCDEFG".toCharArray();
+
+        new Thread(() -> {
+            for (int i = 0; i < str.length; i++) {
+                try {
+                    bq.put(i);
+                    System.out.println(str[i]);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        new Thread(() -> {
+            for (int i = 0; i < num.length; i++) {
+                try {
+                    bq.take();
+                    System.out.println(num[i]);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
 
     }
 
@@ -197,13 +220,13 @@ public class ThreadAlternate {
         //测试lockSupport方式
         //byLockSupport();
         //测试volatile方式
-        //ByCASAndVolatile();
+        //byCASAndVolatile();
         //测试原子类方式
         //byAtomic();
         //测试wait-notify 方式
         //bySynchNotify();
         //测试lock方式
-        byLock();
+        //byLock();
         //测试阻塞队列方式
         byBlockingQueue();
     }

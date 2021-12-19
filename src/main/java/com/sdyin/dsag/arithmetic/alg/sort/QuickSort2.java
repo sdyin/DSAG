@@ -10,46 +10,40 @@ import java.util.Arrays;
 public class QuickSort2 {
 
     public static void main(String[] args) {
-        int arr[] = {10,7,8,2,5,42,56,8,4,6,7,2,2,6,3,6,11,34};
-        sort(arr);
-    }
-
-    public static void sort(int[] arr){
-
-        int[] result = quickSort(arr, 0, arr.length -1);
+        int arr[] = {10, 7, 8, 2, 5, 42, 56, 8, 4, 6, 7, 2, 2, 6, 3, 6, 11, 34};
+        int[] result = quickSort(arr, 0, arr.length - 1);
         Arrays.stream(result).forEach(System.out::println);
     }
 
     private static int[] quickSort(int[] arr, int left, int right) {
-        if (left < right){
-            //寻找基准点
-           int pivot = findPivot(arr, left, right);
-           quickSort(arr, left, pivot - 1);
-           quickSort(arr, pivot + 1, right);
+        if (left < right) {
+            int pivot = findPivot(arr, left, right);
+            quickSort(arr, left, pivot - 1);
+            // 右节点需要间隔基准值所在下标索引 + 1，不然每次右节点会死循环递归
+            quickSort(arr, pivot + 1, right);
         }
         return arr;
     }
 
     private static int findPivot(int[] arr, int left, int right) {
-        //假设最左为基准点
-        int pivot = arr[left];
-        while (left < right){
-
-            //注意，基准值采用最左元素时，应该先移动右边
-            //如果先移动左边，出现第一个不满足情况时(即要替换元素)，基准值会移动替换到右边
-            while(arr[right] >= pivot && left < right){
-                right--;
+        //默认初始最左为基准值
+        int tmp = arr[left];
+        while (left < right) {
+            //满足条件,则移动指针位置
+            while (left < right && arr[right] >= tmp) {
+                --right;
+                System.out.println("right:" + right);
             }
-            //右边数据小于基准值时，交换到左边
+            //不满足条件时,即右节点当前值转移到左边。
             arr[left] = arr[right];
 
-            while(arr[left] <= pivot && left < right){
-                left++;
+            while (left < right && arr[left] <= tmp) {
+                ++left;
             }
-            //左边数据大于pivot时，交换到右边
             arr[right] = arr[left];
         }
-        arr[left] = pivot;
+
+        arr[left] = tmp;
         return left;
     }
 }
