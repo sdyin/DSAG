@@ -47,6 +47,32 @@ public class RevertLinkedList2 {
         return resultNode;
     }
 
+    /**
+     * 迭代方式，时间复杂度0(n), 空间复杂度0(1)
+     * 思路：头结点的前置节点为空，把头节点的后置节点置为空即反转了。
+     *
+     * @param head
+     * @return
+     */
+    private static ListNode revert2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode pre = null;
+        ListNode cur = head;
+        while (cur != null) {
+            //暂存当前节点的next节点
+            final ListNode nextNode = cur.next;
+            //当前节点转移为新节点的头节点
+            cur.next = pre;
+            //新链表头结点
+            pre = cur;
+            //获取暂存的next节点，继续迭代
+            cur = nextNode;
+        }
+        return pre;
+    }
+
     private static ListNode root;
 
     /**
