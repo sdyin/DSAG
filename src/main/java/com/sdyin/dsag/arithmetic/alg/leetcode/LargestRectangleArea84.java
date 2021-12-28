@@ -63,13 +63,13 @@ public class LargestRectangleArea84 {
     }
 
     /**
-     * TODO 单调栈递增
+     * 单调栈解法
      *
      * @param heights
      * @return
      */
     public int largestRectangleArea2(int[] heights) {
-
+        //边界处理
         int len = heights.length;
         if (len == 0) {
             return 0;
