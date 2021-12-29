@@ -18,6 +18,10 @@ public class RevertLinkedList2 {
         ListNode listNode5 = new ListNode(1);
         listNode4.next = listNode5;
         ListNode node = revertRecursion(listNode);
+        while(node != null){
+            System.out.println(node.val);
+            node = node.next;
+        }
     }
 
 
@@ -73,8 +77,6 @@ public class RevertLinkedList2 {
         return pre;
     }
 
-    private static ListNode root;
-
     /**
      * 递归方式-反转单链表
      *
@@ -82,27 +84,26 @@ public class RevertLinkedList2 {
      * @return
      */
     private static ListNode revertRecursion(ListNode head) {
-        root = head;
-        recursion(head);
+        ListNode root = new ListNode(head.val);
+        root = recursion(head, root);
         return root;
     }
 
-    private static ListNode recursion(ListNode head) {
-        //判断当前节点和下一节点
-        if (head == null || head.next == null) {
-            return head;
+
+    private static ListNode recursion(ListNode head, ListNode root) {
+        if (head == null || head.next == null){
+            return root;
         }
-
-        final ListNode next = head.next;
-
+        //head的next节点
+        ListNode next = head.next;
+        //head 直接指向next的next节点，断开next节点
         head.next = head.next.next;
-
+        //next节点放到首位
         next.next = root;
-
+        //root节点指向新链表的首节点
         root = next;
-        //递归处理head节点
-        recursion(head);
-
-        return next;
+        //递归调用
+        root = recursion(head, root);
+        return root;
     }
 }
