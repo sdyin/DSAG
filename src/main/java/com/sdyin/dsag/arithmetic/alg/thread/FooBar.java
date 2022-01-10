@@ -4,6 +4,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @Description: leetcode-thread: 1115. 交替打印FooBar
@@ -39,6 +41,103 @@ public class FooBar {
             printBar.run();
         }
     }
+}
+
+/**
+ * 通过synchronized锁方式
+ */
+class FooBar_Synchronized{
+    private int n;
+
+    private Object obj = new Object();
+    private int status = 0;
+
+    public FooBar_Synchronized(int n) {
+        this.n = n;
+    }
+
+    public void foo(Runnable printFoo) throws InterruptedException {
+
+        for (int i = 0; i < n; i++) {
+            synchronized (obj) {
+                while (status != 0) {
+                    obj.wait();
+                }
+                // printFoo.run() outputs "foo". Do not change or remove this line.
+                printFoo.run();
+                status = 1;
+                obj.notifyAll();
+            }
+        }
+    }
+
+    public void bar(Runnable printBar) throws InterruptedException {
+
+        for (int i = 0; i < n; i++) {
+            synchronized (obj){
+                while (status != 1){
+                    obj.wait();
+                }
+                // printBar.run() outputs "bar". Do not change or remove this line.
+                printBar.run();
+                status = 0;
+                obj.notifyAll();
+            }
+        }
+    }
+}
+
+/**
+ * 通过ReentrantLock 加锁方式
+ */
+class FooBar_ReentrantLock {
+
+    private int n;
+
+    private int status = 0;
+
+    public FooBar_ReentrantLock(int n) {
+        this.n = n;
+    }
+
+    private ReentrantLock lock = new ReentrantLock();
+
+    private Condition condition = lock.newCondition();
+
+    public void foo(Runnable printFoo) throws InterruptedException {
+        for (int i = 0; i < n; i++) {
+            lock.lock();
+            try {
+                while (status != 0) {
+                    condition.await();
+                }
+                // printFoo.run() outputs "foo". Do not change or remove this line.
+                printFoo.run();
+                status = 1;
+            } finally {
+                condition.signalAll();
+                lock.unlock();
+            }
+        }
+    }
+
+    public void bar(Runnable printBar) throws InterruptedException {
+        for (int i = 0; i < n; i++) {
+            lock.lock();
+            try {
+                while (status != 1){
+                    condition.await();
+                }
+                // printBar.run() outputs "bar". Do not change or remove this line.
+                printBar.run();
+                status = 0;
+            } finally {
+                condition.signalAll();
+                lock.unlock();
+            }
+        }
+    }
+
 }
 
 /**

@@ -1,4 +1,4 @@
-package com.sdyin.dsag.arithmetic.thread;
+package com.sdyin.dsag.arithmetic.alg.thread;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
