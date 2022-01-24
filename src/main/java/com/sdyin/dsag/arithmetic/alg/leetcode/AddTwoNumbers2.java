@@ -70,4 +70,42 @@ public class AddTwoNumbers2 {
         return resultNode.next.next;
     }
 
+    /**
+     * 稍微优化一下
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public static ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+
+        if (l1 == null && l2 == null) {
+            return null;
+        }
+        // 进位flag
+        boolean carryFlag = false;
+        ListNode preNode = new ListNode();
+        ListNode lastNode = preNode;
+        while(l1 != null || l2 != null || carryFlag){
+            int value1 = 0;
+            int value2 = 0;
+            if (l1 != null) {
+                value1 = l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                value2 = l2.val;
+                l2 = l2.next;
+            }
+            int data = value1 + value2;
+            if (carryFlag) {
+                data++;
+            }
+            carryFlag = data >= 10 ? true : false;
+            int value = data % 10;
+            lastNode.next = new ListNode(value);
+            lastNode = lastNode.next;
+        }
+        return preNode.next;
+    }
+
 }
