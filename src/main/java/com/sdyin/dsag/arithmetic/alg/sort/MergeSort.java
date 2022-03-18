@@ -12,8 +12,8 @@ import java.util.Arrays;
 public class MergeSort {
 
     public static void main(String[] args) throws Exception {
-        int[] arrys = {18,3,14,9,55,24,3,58,99};
-        int[] result = sort(arrys);
+        int[] arrays = {18,3,14,9,55,24,3,58,99};
+        int[] result = sort(arrays);
         Arrays.stream(result).forEach(System.out::println);
     }
 
@@ -47,6 +47,7 @@ public class MergeSort {
     protected  static int[] merge(int[] left, int[] right) {
         int[] result = new int[left.length + right.length];
         int i = 0;
+        // 左右子节点均有元素
         while (left.length > 0 && right.length > 0) {
             if (left[0] <= right[0]) {
                 result[i++] = left[0];
@@ -57,11 +58,13 @@ public class MergeSort {
             }
         }
 
+        //只有左节点有元素，直接添加左节点元素
         while (left.length > 0) {
             result[i++] = left[0];
             left = Arrays.copyOfRange(left, 1, left.length);
         }
 
+        //只有右节点有元素，直接添加右节点元素
         while (right.length > 0) {
             result[i++] = right[0];
             right = Arrays.copyOfRange(right, 1, right.length);
