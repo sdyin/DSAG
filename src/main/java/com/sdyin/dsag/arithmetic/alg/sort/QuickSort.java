@@ -32,6 +32,7 @@ public class QuickSort {
         if (left < right) {
             int partitionIndex = partition(arr, left, right);
             quickSort(arr, left, partitionIndex - 1);
+            // 右节点需要间隔基准值所在下标索引 + 1，不然每次右节点会死循环递归
             quickSort(arr, partitionIndex + 1, right);
         }
         return arr;
@@ -42,7 +43,12 @@ public class QuickSort {
         // 设定基准值（pivot）,初始取最左元素
         int tmp = arr[low];
         while (low < high) {
-            // 当队尾的元素大于等于基准数据时,向前挪动high指针
+
+            //这里注意 为什么需要先从右侧开始判断，再从左侧开始？
+            // 因为现在取的基准点是最左元素，也只临时保存了最左元素。如果从左开始，左右第一次互换的时候，会丢掉最右侧的值，结果就会产生偏差
+
+            //此处是 arr[right] >= temp 而不是 arr[right] > temp？
+            // 因为如果基准值和当前值相等也需要转移的话，就会出现arr[left] 和 arr[right] 一直相互转换
             while (low < high && arr[high] >= tmp) {
                 high--;
             }
