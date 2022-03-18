@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * @Description 插入排序示例
+ * 思路：从第二个元素开始(默认第一个最小)，依次和前面元素进行比较，如果比前面元素小，偏移一位继续与前面元素比较，直到匹配到正确位置。
  * @Author liuye
  * @Date 2020/9/26 12:16
  **/
@@ -33,6 +34,7 @@ public class InsertSort {
             int j = i;
 
             //当前待排序节点小于排序节点最尾值,此时当前节点应该向前移动
+            // j>0 判断要放前面，不然j=0时 arr[j-1] 就下标索引越界了
             while(j > 0 && tmp < arr[j - 1]){
                 //当前比较的排序节点 向后移动一位
                 arr[j] = arr[j-1];
