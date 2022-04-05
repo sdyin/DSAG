@@ -6,7 +6,7 @@ package com.sdyin.dsag.arithmetic.alg.leetcode;
  * @Author: liuye
  * @time: 2022/4/5$ 3:14 下午$
  */
-public class mergeTwoLists21 {
+public class MergeTwoLists21 {
 
     /**
      * 合并两个有序链表
