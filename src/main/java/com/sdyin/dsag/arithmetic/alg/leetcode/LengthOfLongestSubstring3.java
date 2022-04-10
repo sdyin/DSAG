@@ -1,5 +1,8 @@
 package com.sdyin.dsag.arithmetic.alg.leetcode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Description: leetcode3. 无重复字符的最长子串
  * 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
@@ -25,6 +28,35 @@ public class LengthOfLongestSubstring3 {
             max = Math.max(max, s2.length());
         }
         return max;
+    }
+
+    /**
+     * 滑动时间窗口方式解题
+     *
+     * @param s
+     * @return
+     */
+    public static int lengthOfLongestSubstring2(String s) {
+        //左闭右开区间
+        int left = 0;
+        int right = 0;
+        int maxLen = 0;
+        Map<String, Integer> window = new HashMap<>();
+
+        //右侧节点右移
+        while (right < s.length()) {
+            String str = s.charAt(right) + "";
+            right++;
+            //左侧节点右移条件：当有重复元素时
+            while (window.containsKey(str)) {
+                String s2 = s.charAt(left) + "";
+                left++;
+                window.remove(s2);
+            }
+            window.put(str, 1);
+            maxLen = Math.max(maxLen, window.size());
+        }
+        return maxLen;
     }
 
     public static void main(String[] args) {
