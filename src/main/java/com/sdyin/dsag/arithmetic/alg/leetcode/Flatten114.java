@@ -22,8 +22,7 @@ public class Flatten114 {
 
         flatten2(root.right);
 
-        //后序遍历 -> 个人理解：为了从底部开始遍历，更便于理解
-        //这地方还需要好好梳理一下！！！！！！！！！！！！！！！！！！！
+        //为什么后序遍历？ ->：需要左右节点都翻转完成后，再去处理
         TreeNode left = root.left;
         TreeNode right = root.right;
 
