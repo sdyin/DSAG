@@ -10,8 +10,8 @@ public class BuildTree105 {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         //下标从0开始，所以尾节点为 length - 1
-        buildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
-        return null;
+        final TreeNode treeNode = buildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
+        return treeNode;
     }
 
     private TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
@@ -24,14 +24,14 @@ public class BuildTree105 {
         int rootVal =  preorder[preStart];
         TreeNode root = new TreeNode(rootVal);
         //遍历获取左子树长度
-        for (int i = 0; i < inorder.length; i++) {
+        for (int i = inStart; i <= inEnd; i++) {
             if(rootVal == inorder[i]){
                 index = i;
                 break;
             }
         }
 
-        //左子树长度
+        //左子树长度，不要想当然就以为preStart + leftSize 一直等于 index
         int leftSize = index - inStart;
 
         // 构造左子树
