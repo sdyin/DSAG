@@ -31,7 +31,8 @@ public class BuildTree105 {
             }
         }
 
-        //左子树长度，不要想当然就以为preStart + leftSize 一直等于 index
+        //左子树长度
+        // 不要想当然就以为preStart + leftSize 一直等于 index，preStart的索引不是一直为0
         int leftSize = index - inStart;
 
         // 构造左子树
