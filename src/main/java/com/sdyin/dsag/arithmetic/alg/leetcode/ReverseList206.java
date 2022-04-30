@@ -19,7 +19,7 @@ package com.sdyin.dsag.arithmetic.alg.leetcode;
 public class ReverseList206 {
 
     public ListNode reverseList(ListNode head) {
-
+        //初始pre节点为null
         ListNode pre = null;
 
         ListNode cur = head;
@@ -47,31 +47,23 @@ public class ReverseList206 {
      * @return
      */
     public ListNode reverseList2(ListNode head) {
-        if (head == null || head.next == null) {
+        if (head == null) {
             return head;
         }
-
-        ListNode dummy = new ListNode(-1);
+        final ListNode dummy = new ListNode(-1);
         dummy.next = head;
-
-        while (head.next != null) {
-            final ListNode newNode = new ListNode(head.next.val);
-
-            //暂存后一节点
-            ListNode next = head.next;
-            head.next = null;
-
-            //后一节点提前到队首
-            newNode.next = dummy.next;
-            dummy.next = newNode;
-
-            head = next;
+        ListNode p = head;
+        while (p.next != null) {
+            //暂存next节点
+            ListNode next = p.next;
+            ListNode node = new ListNode(next.val);
+            p.next = null;
+            //这里不能 node.next = p; 因为后续p会变化
+            node.next = dummy.next;
+            dummy.next = node;
+            p = next;
         }
-
-        //最后一个节点
-        head.next = dummy.next;
-
-        return head;
+        return dummy.next;
     }
 
     /**
