@@ -39,4 +39,30 @@ public class IsPalindrome234 {
         }
         return true;
     }
+
+    ListNode left;
+
+    /**
+     * 链表后序遍历方式
+     *
+     * @param head
+     * @return
+     */
+    public boolean isPalindrome2(ListNode head) {
+        left = head;
+        return revert(head);
+    }
+
+    private boolean revert(ListNode right) {
+        if (right == null) {
+            return true;
+        }
+
+        boolean boo = revert(right.next);
+        //后序遍历处理(子处理是true 并且当前位置left.val == right.val)
+        boo = boo && (left.val == right.val);
+
+        left = left.next;
+        return boo;
+    }
 }
