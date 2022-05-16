@@ -70,4 +70,57 @@ public class SearchRange34 {
         result = new int[]{left, right2 - 1};
         return result;
     }
+
+    /**
+     * 拆解二分查找左右边界解法
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] searchRange2(int[] nums, int target) {
+
+        int first = leftBound(nums, target);
+        int last = rightBound(nums, target);
+        if (first > last) {
+            return new int[]{-1, -1};
+        }
+        return new int[]{first, last};
+    }
+
+    private int leftBound(int[] nums, int target) {
+
+        int left = 0;
+        int right = nums.length;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                right = mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid;
+            }
+        }
+        return left;
+    }
+
+    private int rightBound(int[] nums, int target) {
+
+        int left = 0;
+        int right = nums.length;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                left = mid + 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid;
+            }
+        }
+        return right - 1;
+    }
 }
