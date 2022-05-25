@@ -1,8 +1,6 @@
 package com.sdyin.dsag.arithmetic.alg.leetcode;
 
 import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -34,31 +32,20 @@ public class PreorderTraversal144 {
         dfs(list, root.right);
     }
 
+    public List<Integer> list = new ArrayList<>();
+
     /**
-     * 二叉树前序遍历-bfs解法
-     * TODO leetcode提交不对？
+     * dfs 也可以直接用当前方法，配合一个全局变量即可
      * @param root
      * @return
      */
-    public static List<Integer> preorderTraversalBfs(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        if(root == null){
+    public List<Integer> preorderTraversal2(TreeNode root) {
+        if (root == null) {
             return list;
         }
-        Deque<TreeNode> deque = new LinkedList<TreeNode>();
-        deque.push(root);
-
-        while (!deque.isEmpty()){
-            TreeNode node = deque.pop();
-
-            list.add(node.val);
-            if(node.left != null){
-                deque.push(node.left);
-            }
-            if(node.right != null){
-                deque.push(node.right);
-            }
-        }
+        list.add(root.val);
+        preorderTraversal2(root.left);
+        preorderTraversal2(root.right);
         return list;
     }
 
