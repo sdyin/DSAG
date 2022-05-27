@@ -12,24 +12,24 @@ package com.sdyin.dsag.arithmetic.alg.leetcode;
  */
 public class Flatten114 {
 
-    //2.分解方式解决问题，分别递归对左节点和右节点处理
-    public  void flatten2(TreeNode root) {
+    // 分解方式解决问题
+    // 定义：将以 root 为根的树拉平为链表
+    public void flatten2(TreeNode root) {
         if (root == null) {
             return;
         }
 
         flatten2(root.left);
-
         flatten2(root.right);
 
-        //为什么后序遍历？ ->：需要左右节点都翻转完成后，再去处理
+        //后序遍历位置处理(是为了从底部开始处理，自底向上)
         TreeNode left = root.left;
         TreeNode right = root.right;
-
+        //左子树作为右子树
         root.left = null;
         root.right = left;
-        //原先右节点拼接到左节点右侧
-        TreeNode p  = root;
+        //这里要循环，因为当前右子树可能有多个节点，所以一定要递归到右子树最后一个节点，再来拼接原有右子树
+        TreeNode p = root;
         while (p.right != null) {
             p = p.right;
         }
