@@ -51,7 +51,7 @@ public class Connect116 {
     }
 
     /**
-     * 分解问题解法
+     * 递归方式解法
      *
      * @param root
      * @return
