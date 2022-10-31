@@ -12,9 +12,9 @@ import java.util.Arrays;
 public class CoinChange {
 
     public static void main(String[] args) {
-        int[] coins = {2,5};
+        int[] coins = {2,3,5};
         int amount = 33;
-        int result = coinChange(coins, amount);
+        int result = coinChange2(coins, amount);
         System.out.println("结果："+ result);
     }
 
@@ -44,5 +44,32 @@ public class CoinChange {
             }
         }
         return (dp[amount] == amount + 1) ? -1 : dp[amount];
+    }
+
+    /**
+     * 递归解法 -》自顶向下
+     * @param coins
+     * @param amount
+     * @return
+     */
+    public static int coinChange2(int[] coins, int amount){
+        // base case
+        if (amount == 0) {
+            return 0;
+        }
+        if (amount < 0) {
+            return -1;
+        }
+        int res = Integer.MAX_VALUE;
+        for (int coin : coins) {
+            //求解子问题
+            int subResult = coinChange2(coins, amount - coin);
+            if (subResult == -1) {
+                continue;
+            }
+            // 子问题有解 -》 获取最优解
+            res = Math.min(res, subResult + 1);
+        }
+        return res == Integer.MAX_VALUE ? -1 : res;
     }
 }
