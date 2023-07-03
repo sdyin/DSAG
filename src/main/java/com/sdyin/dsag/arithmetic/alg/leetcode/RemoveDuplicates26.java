@@ -62,4 +62,21 @@ public class RemoveDuplicates26 {
         }
         return i + 1;
     }
+
+
+    public int removeDuplicates2(int[] nums) {
+        int slow = 0;
+        int fast = 0;
+        // 从1开始,防止fast下标角标越界
+        for(int i = 1; i < nums.length; i++) {
+            fast++;
+            if( nums[slow] != nums[fast]) {
+                slow++;
+                nums[slow] = nums[fast];
+            }
+        }
+        return slow + 1;
+    }
+
+
 }
