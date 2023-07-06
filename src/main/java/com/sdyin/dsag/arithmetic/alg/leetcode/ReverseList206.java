@@ -67,6 +67,23 @@ public class ReverseList206 {
     }
 
     /**
+     * reverseList2方法 优化简洁版本
+     *
+     * @param head
+     * @return
+     */
+    public ListNode reverseList2_1(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        while (head != null) {
+            ListNode node = new ListNode(head.val);
+            node.next = dummy.next;
+            dummy.next = node;
+            head = head.next;
+        }
+        return dummy.next;
+    }
+
+    /**
      * 递归方式
      *
      * @param head
