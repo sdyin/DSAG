@@ -16,33 +16,32 @@ public class RemoveNthFromEnd19 {
      * @return
      */
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        if (head == null || n == 0) {
+        if (head == null) {
             return head;
         }
+        ListNode p1 = head;
+        ListNode p2 = head;
+        // 先让节点后移N个节点
+        for(int i = 0; i < n; i++) {
+            head = head.next;
+        }
 
-        ListNode h1 = head;
-        ListNode h2 = head;
-        //先后移n位
-        for (int i = 0; i < n; i++) {
-            //当n大于 链表长度时场景
-            if (head == null) {
-                return h2;
-            }
-            head = head.next;
-        }
-        //链表长度 = n 时，去除首节点
+        //特殊场景，链表已遍历完，倒数第N位就是第一位，直接响应
         if (head == null) {
-            return h2.next;
+            return p2.next;
         }
-        //这里为什么是head.next 而不是head?
-        //因为如果是head，那么此时head没有后移，却导致h1后移了一位
-        // 如果我们要删除倒数第N个节点，那么我们应该找到倒数第N-1个节点，然后移除其后一节点。
-        while (head.next != null) {
-            h1 = h1.next;
+
+        // 正常场景：走到尾节点，假设链表长度是K，那就继续走K-N步
+        // 此时p1节点走了K-N步，也就是此时p1就是倒数第N个节点
+        while(head != null) {
             head = head.next;
+            if (head != null) {
+                p1 = p1.next;
+            } else {
+                p1.next = p1.next.next;
+            }
         }
-        h1.next = h1.next.next;
-        return h2;
+        return p2;
     }
 
     /**
