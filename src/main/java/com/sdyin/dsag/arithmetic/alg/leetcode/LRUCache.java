@@ -1,9 +1,6 @@
 package com.sdyin.dsag.arithmetic.alg.leetcode;
 
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description: leetcode 146
@@ -23,9 +20,8 @@ public class LRUCache {
 
     private int capacity;
 
-    private Map<Integer, Integer> map = new HashMap();
-
-    private Deque deque = new LinkedList();
+    // 双向链表 + 哈希表
+    private LinkedHashMap<Integer, Integer> cache = new LinkedHashMap<Integer, Integer>();
 
     public LRUCache(){}
 
@@ -39,12 +35,14 @@ public class LRUCache {
      * @return
      */
     public int get(int key) {
-        if(map.get(key) == null){
+        if(cache.get(key) == null){
             return -1;
         }
-        deque.remove(key);
-        deque.offerFirst(key);
-        return map.get(key);
+        Integer value = cache.get(key);
+        // 删除原有key 重新插入，重新插入为插入链表尾部
+        cache.remove(key);
+        cache.put(key, value);
+        return cache.get(key);
     }
 
     /**
@@ -54,25 +52,24 @@ public class LRUCache {
      */
     public void put(int key, int value) {
         //存在值
-        if(map.get(key) != null){
-            map.put(key,value);
+        if(cache.get(key) != null){
+            cache.put(key,value);
             //设值新值时,当前key也应该是最新的
-            deque.remove(key);
-            deque.offerFirst(key);
+            //删除原有key 重新插入
+            cache.remove(key);
+            cache.put(key, value);
         }else{
             //不存在值
             //容量已满
-            if(map.size() == capacity){
-                //先移除最久的值
-                int k = (int) deque.pollLast();
-                map.remove(k);
+            if(cache.size() == capacity){
+                //先移除最久的值(也就是最先存入的值)
+                Map.Entry<Integer, Integer> next = cache.entrySet().iterator().next();
+                cache.remove(next.getKey());
 
                 //再添加最新的值
-                map.put(key, value);
-                deque.offerFirst(key);
+                cache.put(key, value);
             }else{
-                map.put(key,value);
-                deque.offerFirst(key);
+                cache.put(key,value);
             }
         }
     }
