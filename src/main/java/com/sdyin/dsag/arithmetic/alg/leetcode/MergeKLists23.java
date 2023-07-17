@@ -23,8 +23,8 @@ public class MergeKLists23 {
         ListNode p = new ListNode(-1);
         ListNode dummy = p;
 
-        //指定最小堆
-        final PriorityQueue<ListNode> pq = new PriorityQueue<>((ListNode l1, ListNode l2) -> l1.val - l2.val);
+        //指定最小堆(优先队列)
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((ListNode l1, ListNode l2) -> l1.val - l2.val);
         for (ListNode node: lists) {
             //添加null 元素时会抛出空指针异常
             if (node != null) {
@@ -33,8 +33,10 @@ public class MergeKLists23 {
         }
 
         while (!pq.isEmpty()) {
-            final ListNode node = pq.poll();
+            // 获取最小值对应的链表
+            ListNode node = pq.poll();
             p.next = node;
+            // 如果链表还有元素，重新加入优先队列
             if (node.next != null) {
                 pq.add(node.next);
             }
