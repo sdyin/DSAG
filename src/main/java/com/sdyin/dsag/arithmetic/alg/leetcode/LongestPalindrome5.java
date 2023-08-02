@@ -65,4 +65,38 @@ public class LongestPalindrome5 {
         }
         return s.substring(begin, begin + maxLen);
     }
+
+    /**
+     * 双指针法求解
+     * @param s
+     * @return
+     */
+    public static String longestPalindrome2(String s) {
+        if (s == null || "".equals(s)) {
+            return s;
+        }
+        String result = "";
+        for (int i = 0; i < s.length(); i++) {
+            int left = i;
+            int right = i+1;
+            //单个字符作为回文中心字符
+            String s1 = findLongestPalindrome(s, left, left);
+            //两个字符作为回文中心字符
+            String s2 = findLongestPalindrome(s, left, right);
+            String max = s1.length() > s2.length() ? s1 : s2;
+            result = max.length() > result.length() ? max : result;
+        }
+        return result;
+    }
+
+
+    private static String findLongestPalindrome(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            // 双指针向两侧展开
+            left--;
+            right++;
+        }
+        // 返回以 s[left] 和 s[right] 为中心的最长回文串
+        return s.substring(left + 1, right);
+    }
 }
