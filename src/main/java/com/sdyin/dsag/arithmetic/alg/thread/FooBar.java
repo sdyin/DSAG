@@ -141,7 +141,6 @@ class FooBar_ReentrantLock {
 }
 
 /**
- * leetcode提交通过, 本地测试未正常打印
  * 使用阻塞队列BlockingQueue方式
  */
 class FooBar_BlockingQueue {
@@ -172,10 +171,22 @@ class FooBar_BlockingQueue {
 
     public static void main(String[] args) throws InterruptedException {
         FooBar_BlockingQueue fb = new FooBar_BlockingQueue(3);
-        Thread t1 = new Thread(() -> System.out.println("foo"));
-        Thread t2 = new Thread(() -> System.out.println("bar"));
-        fb.foo(t1);
-        fb.bar(t2);
+        Thread t1 = new Thread(() -> {
+            try {
+                fb.foo(() -> System.out.println("foo"));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        Thread t2 = new Thread(() -> {
+            try {
+                fb.bar(() -> System.out.println("bar"));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        t1.start();
+        t2.start();
         Thread.sleep(10);
     }
 
