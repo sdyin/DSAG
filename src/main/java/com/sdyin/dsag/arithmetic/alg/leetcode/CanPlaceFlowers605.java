@@ -99,6 +99,30 @@ public class CanPlaceFlowers605 {
         return n < 0;
     }
 
+    public static boolean canPlaceFlowers3(int[] flowerbed, int n) {
+        int result = 0;
+        for (int i = 0; i < flowerbed.length; i++) {
+            // 当前节点已有花，跳过
+            if (flowerbed[i] == 1){
+                continue;
+            }
+            // 上一节点已有花，跳过(排除第一个节点边界情况)
+            if (i > 0 && flowerbed[i - 1] == 1){
+                continue;
+            }
+            // 下一节点已有花，跳过
+            if (i < flowerbed.length - 1 && flowerbed[i + 1] == 1){
+                continue;
+            }
+            flowerbed[i] = 1;
+            result++;
+        }
+        if (result >= n){
+            return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         int[] arr = {1, 0, 0, 0, 1, 0, 0};
         int n = 2;
