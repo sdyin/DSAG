@@ -38,6 +38,7 @@ public class RightSideView199 {
         }
         depth++;
         //从最右侧添加，根据递归逻辑可知，只添加一个，即最右侧
+        // 如果左右子树同时有节点，优先获取右子树，右子树满足时，同一层级左子树就不满足 depth == list.size() 条件了
         dfs(node.right, depth);
         dfs(node.left, depth);
     }
