@@ -1,9 +1,7 @@
 package com.sdyin.dsag.arithmetic.alg.bloomfilter;
 
-import com.google.common.base.Charsets;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
-import com.sdyin.dsag.arithmetic.alg.Test;
 
 /**
  * @Description guava提供的布隆过滤器
@@ -11,7 +9,7 @@ import com.sdyin.dsag.arithmetic.alg.Test;
  * @Author liuye
  * @Date 2020/8/27 11:03
  **/
-public class guavaBloomFilter {
+public class GuavaBloomFilter {
 
     public static void main(String[] args) {
         //Funnels.stringFunnel(Charsets.UTF_8);
