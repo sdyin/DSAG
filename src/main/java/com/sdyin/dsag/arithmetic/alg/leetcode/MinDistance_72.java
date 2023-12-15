@@ -22,7 +22,7 @@ package com.sdyin.dsag.arithmetic.alg.leetcode;
  * @Author: liuye
  * @time: 2022/4/25$ 7:41 上午$
  */
-public class MinDistance72 {
+public class MinDistance_72 {
 
     public int minDistance(String word1, String word2) {
         int m = word1.length();
@@ -41,6 +41,7 @@ public class MinDistance72 {
         //dp 二维数组自底向上求解
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
+                // 状态转移方程：
                 //如果索引i处 和 j处相等,相当于移除当前这两个字符，和前面子串一样
                 if (word1.charAt(i-1) == word2.charAt(j-1)){
                     dp[i][j] = dp[i-1][j-1];
