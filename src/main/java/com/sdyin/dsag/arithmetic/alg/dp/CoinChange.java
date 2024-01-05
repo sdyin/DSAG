@@ -64,6 +64,7 @@ public class CoinChange {
         for (int coin : coins) {
             //求解子问题
             int subResult = coinChange2(coins, amount - coin);
+            //子问题无解，跳过
             if (subResult == -1) {
                 continue;
             }
