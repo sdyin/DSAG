@@ -38,15 +38,15 @@ public class TwoSum1 {
      * @return
      */
     public int[] twoSum2(int[] nums, int target) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            int num = nums[i];
-            if (map.containsKey(num)) {
-                int index = map.get(num);
-                return new int[]{i, index};
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++) {
+            int needKey = target - nums[i];
+            if(map.containsKey(needKey)) {
+                // 由于map未初始化值， 所以构造数组时顺序相反，根据第二个元素找第一个元素
+                return new int[]{map.get(needKey), i};
             }
-            int data = target - num;
-            map.put(data, i);
+            // 先比较 后存入map，避免重复元素自比较问题
+            map.put(nums[i], i);
         }
         return null;
     }
