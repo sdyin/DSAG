@@ -6,10 +6,10 @@ package com.sdyin.dsag.arithmetic.ds.linkedlist;
  * @Date 2020/10/10 15:11
  **/
 public class ListNode {
-    int val;
-    ListNode next;
+    public int val;
+    public ListNode next;
 
-    ListNode(int x) {
+    public ListNode(int x) {
         val = x;
         next = null;
     }
