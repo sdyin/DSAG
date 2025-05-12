@@ -65,4 +65,42 @@ public class IsPalindrome234 {
         left = left.next;
         return boo;
     }
+
+    /**
+     * 快慢指针方式
+     * @param head
+     * @return
+     */
+    public boolean isPalindrome3(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode prev = null;
+
+        // 快慢指针找到中点并且反转前半部分链表
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+
+            ListNode next = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = next;
+        }
+
+        // 处理奇数长度情况
+        if (fast!= null) {
+            slow = slow.next;
+        }
+
+        // 比较前半部分和后半部分
+        while (prev!= null && slow!= null) {
+            if (prev.val!= slow.val) {
+                return false;
+            }
+            prev = prev.next;
+            slow = slow.next;
+        }
+        return true;
+    }
+
+
 }
