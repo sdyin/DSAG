@@ -1,4 +1,5 @@
 package com.sdyin.dsag.arithmetic.alg.leetcode;
+import com.sdyin.dsag.arithmetic.ds.linkedlist.ListNode;
 
 /**
  * @Description: leetcode 19.删除链表的倒数第 N 个结点
@@ -77,5 +78,27 @@ public class RemoveNthFromEnd19 {
         }
         // p2 现在指向第 length - k 个节点, 也就是倒数第k个节点
         return p2;
+    }
+
+
+    public ListNode removeNthFromEnd3(ListNode head, int n) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+
+        int length = 0;
+        // 先遍历计算链表长度
+        while (head != null) {
+            length++;
+            head = head.next;
+        }
+        // 该下标索引处 需移除后一节点
+        int index = length - n;
+        for (int i = 0; i < index; i++) {
+            pre = pre.next;
+        }
+        pre.next = pre.next.next;
+
+        return dummy.next;
     }
 }
