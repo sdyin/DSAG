@@ -1,4 +1,5 @@
 package com.sdyin.dsag.arithmetic.alg.leetcode;
+import com.sdyin.dsag.arithmetic.ds.linkedlist.ListNode;
 
 /**
  * @Description: leetcode: 2.两数相加
@@ -36,76 +37,90 @@ public class AddTwoNumbers2 {
      * @param l2
      * @return
      */
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-
-        if (l1 == null && l2 == null) {
-            return null;
-        }
-        // 进位flag
-        boolean carryFlag = false;
-        ListNode resultNode = new ListNode(-1);
-        ListNode lastNode = new ListNode(-2);
-        resultNode.next = lastNode;
-        while(l1 != null || l2 != null || carryFlag){
-            int value1 = 0;
-            int value2 = 0;
-            if (l1 != null) {
-                value1 = l1.val;
-                l1 = l1.next;
-            }
-            if (l2 != null) {
-                value2 = l2.val;
+    public com.sdyin.dsag.arithmetic.ds.linkedlist.ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode res = new ListNode(-1);
+        ListNode cur = res;
+        // 标识后一次是否进位：0.不进位，1.进位
+        int carry = 0;
+        while (l1 != null || l2 != null) {
+            if (l1 == null) {
+                int sum = l2.val + carry;
+                if (sum > 9) {
+                    cur.next = new ListNode(sum % 10);
+                    carry = 1;
+                } else {
+                    cur.next = new ListNode(sum);
+                    carry = 0;
+                }
+                cur = cur.next;
                 l2 = l2.next;
+                continue;
             }
-            int data = value1 + value2;
-            if (carryFlag) {
-                data++;
+            if (l2 == null) {
+                int sum = l1.val + carry;
+                if (sum > 9) {
+                    cur.next = new ListNode(sum % 10);
+                    carry = 1;
+                } else {
+                    cur.next = new ListNode(sum);
+                    carry = 0;
+                }
+                cur = cur.next;
+                l1 = l1.next;
+                continue;
             }
-            carryFlag = data >= 10 ? true : false;
-            int value = data % 10;
-            ListNode node = new ListNode(value);
-            lastNode.next = node;
-            lastNode = node;
+
+            int v1 = l1.val;
+            int v2 = l2.val;
+            int sum = v1 + v2 + carry;
+            if (sum > 9) {
+                cur.next = new ListNode(sum % 10);
+                carry = 1;
+            } else {
+                cur.next = new ListNode(sum);
+                carry = 0;
+            }
+            cur = cur.next;
+            l1 = l1.next;
+            l2 = l2.next;
         }
-        return resultNode.next.next;
+        // 如果还有进位，需要额外处理
+        if (carry > 0) {
+            cur.next = new ListNode(carry);
+        }
+        return res.next;
     }
 
     /**
-     * 稍微优化一下
+     * 优化版本
      * @param l1
      * @param l2
      * @return
      */
     public static ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
 
-        if (l1 == null && l2 == null) {
-            return null;
-        }
-        // 进位flag
-        boolean carryFlag = false;
-        ListNode preNode = new ListNode();
-        ListNode lastNode = preNode;
-        while(l1 != null || l2 != null || carryFlag){
-            int value1 = 0;
-            int value2 = 0;
+        ListNode dummy = new ListNode(-1);
+        ListNode cur = dummy;
+        // 标识后一次是否进位：0.不进位，1.进位
+        int carry = 0;
+
+        while (l1 != null || l2 != null || carry != 0) {
+            int sum = carry;
             if (l1 != null) {
-                value1 = l1.val;
+                sum += l1.val;
                 l1 = l1.next;
             }
             if (l2 != null) {
-                value2 = l2.val;
+                sum += l2.val;
                 l2 = l2.next;
             }
-            int data = value1 + value2;
-            if (carryFlag) {
-                data++;
-            }
-            carryFlag = data >= 10 ? true : false;
-            int value = data % 10;
-            lastNode.next = new ListNode(value);
-            lastNode = lastNode.next;
+
+            carry = sum / 10;
+            cur.next = new ListNode(sum % 10);
+            cur = cur.next;
         }
-        return preNode.next;
+
+        return dummy.next;
     }
 
 }
