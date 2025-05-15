@@ -37,7 +37,7 @@ public class AddTwoNumbers2 {
      * @param l2
      * @return
      */
-    public com.sdyin.dsag.arithmetic.ds.linkedlist.ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode res = new ListNode(-1);
         ListNode cur = res;
         // 标识后一次是否进位：0.不进位，1.进位
