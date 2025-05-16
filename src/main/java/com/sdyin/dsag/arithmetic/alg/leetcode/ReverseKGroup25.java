@@ -1,5 +1,7 @@
 package com.sdyin.dsag.arithmetic.alg.leetcode;
 
+import com.sdyin.dsag.arithmetic.ds.linkedlist.ListNode;
+
 /**
  * @Description: 25. K 个一组翻转链表
  * 给你链表的头节点 head ，每k个节点一组进行翻转，请你返回修改后的链表。
@@ -16,6 +18,12 @@ package com.sdyin.dsag.arithmetic.alg.leetcode;
  */
 public class ReverseKGroup25 {
 
+    /**
+     * 递归解法
+     * @param head
+     * @param k
+     * @return
+     */
     public ListNode reverseKGroup(ListNode head, int k) {
         if ( head == null) {
             return head;
@@ -58,5 +66,69 @@ public class ReverseKGroup25 {
             cur = next;
         }
         return pre;
+    }
+
+
+    /**
+     * 迭代解法
+     * @param head
+     * @param k
+     * @return
+     */
+    public ListNode reverseKGroup2(ListNode head, int k) {
+        if (head == null || k == 1) {
+            return head;
+        }
+
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+
+        ListNode cur = head;
+
+        while (cur != null) {
+            //检查是否有足够的k个节点
+            ListNode tail  = cur;
+
+            int count = 0;
+            while (tail != null && count < k) {
+                tail = tail.next;
+                count++;
+            }
+
+            // 数量不足， 不翻转
+            if (count < k) {
+                break;
+            }
+
+            // 翻转k个节点的链表, 需要返回翻转后的头尾节点
+            ListNode[] reversed = reverse(cur, k);
+            ListNode newHead = reversed[0];
+            ListNode newTail = reversed[1];
+            // 连接翻转后的链表
+            pre.next = newHead;
+            newTail.next = tail;
+
+            // 更新下一组数据的pre和cur
+            pre = newTail;
+            cur = tail;
+        }
+        return dummy.next;
+    }
+
+    // 翻转前K个节点，返回[新头节点, 新尾节点]
+    private ListNode[] reverse(ListNode head, int k) {
+        ListNode pre = null;
+        ListNode cur = head;
+
+        while (k-- > 0) {
+            // 暂存下一节点
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            // 继续下一个节点
+            cur = next;
+        }
+        return new ListNode[]{pre, head};
     }
 }
