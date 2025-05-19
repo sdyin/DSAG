@@ -30,6 +30,24 @@ public class InvertTree226 {
     }
 
     /**
+     * 递归
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode invertTreeRe(TreeNode root) {
+        if (root == null) {
+            return root;
+        }
+        TreeNode leftNode = root.left;
+        TreeNode rightNode = root.right;
+        root.right = invertTree(leftNode);
+        root.left = invertTree(rightNode);
+
+        return root;
+    }
+
+    /**
      * 分解问题的思路
      *
      * @param root
