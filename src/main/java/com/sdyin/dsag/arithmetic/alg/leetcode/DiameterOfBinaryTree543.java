@@ -7,7 +7,7 @@ package com.sdyin.dsag.arithmetic.alg.leetcode;
  * @Author: liuye
  * @time: 2022/5/24$ 10:01 下午$
  */
-public class DiameterOfBinaryTree504 {
+public class DiameterOfBinaryTree543 {
 
     public int maxDiameter = 0;
 
@@ -73,6 +73,45 @@ public class DiameterOfBinaryTree504 {
         maxDiameter = Math.max(maxDiameter, right + left + 1);
         //返回对应节点的最大深度
         return Math.max(left, right) + 1;
+    }
+
+
+
+    public int max = 0;
+
+    /**
+     * 二叉树的最大直径对于每个节点来说就是其左右子树的最大深度之和。
+     *
+     * @param root
+     * @return
+     */
+    public int diameterOfBinaryTree3(TreeNode root) {
+        // 这里不能使用int 类型局部变量，递归过程只对当前栈生效， 不影响外层调用栈的max值， 最终返回始终是0
+        // int max = 0
+        maxDiameter(root);
+        return max;
+    }
+
+
+    /**
+     * 递归返回当前节点的最大深度
+     *
+     * @param node
+     * @return
+     */
+    private int maxDiameter(TreeNode node) {
+        // 递归到叶子节点子节点时，返回0
+        if (node == null) {
+            return 0;
+        }
+        // 递归计算左右子树的最大深度， 注意这里是最大深度，不是最大直径和
+        int leftDepth = maxDiameter(node.left);
+        int rightDepth = maxDiameter(node.right);
+        // 最大直径为左右子树最大深度之和
+        max = Math.max(max, leftDepth + rightDepth);
+        // 返回当前节点的最大深度， 实际上也可以表示节点数量
+        // 这里需要 +1， 不然每层节点都会返回0， 因为递归到叶子节点时，返回0
+        return Math.max(leftDepth, rightDepth) + 1;
     }
 
 }
