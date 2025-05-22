@@ -39,4 +39,37 @@ public class IsValidBST_98 {
         Boolean boo = isValidBST(node.left, min, node.val) && isValidBST(node.right, node.val, max);
         return boo;
     }
+
+
+    // 前置节点
+    private TreeNode prev = null;
+
+    /**
+     * 中序遍历
+     * @param root
+     * @return
+     */
+    public boolean isValidBST2(TreeNode root) {
+        return inorder(root);
+    }
+
+    private boolean inorder(TreeNode node) {
+        if (node == null) {
+            return true;
+        }
+
+        // 检查左子树
+        if (!inorder(node.left)) {
+            return false;
+        }
+
+        // 检查当前节点：必须大于前驱节点
+        if (prev != null && node.val <= prev.val) {
+            return false;
+        }
+        prev = node;
+
+        // 检查右子树
+        return inorder(node.right);
+    }
 }
