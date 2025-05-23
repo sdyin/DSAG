@@ -1,6 +1,7 @@
 package com.sdyin.dsag.arithmetic.alg.leetcode;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description: leetcode 560. 和为 K 的子数组
@@ -50,26 +51,25 @@ public class SubarraySum560 {
      * @return
      */
     public static int subarraySum2(int[] nums, int k) {
-        int n = nums.length;
-        // map：前缀和 -> 该前缀和出现的次数
-        HashMap<Integer, Integer>
-                preSum = new HashMap<>();
-        // base case
-        preSum.put(0, 1);
+        Map<Integer, Integer> map = new HashMap<>();
+        // 前缀和为0出现1次
+        map.put(0, 1);
+        int sum = 0, count = 0;
 
-        int res = 0, sum0_i = 0;
-        for (int i = 0; i < n; i++) {
-            sum0_i += nums[i];
-            // 这是我们想找的前缀和 nums[0..j]
-            int sum0_j = sum0_i - k;
-            // 如果前面有这个前缀和，则直接更新答案
-            if (preSum.containsKey(sum0_j)) {
-                res += preSum.get(sum0_j);
+        for (int num : nums) {
+            // 当前元素值为 num
+            // 当前前缀和
+            sum += num;
+            // 查找是否存在前缀和为 (targetSum = sum - k)
+            // 为什么是target = sum - k。
+            // 因为当前位置前缀和为sum, 如果要找的连续子数组和为k, 则需要找到前缀和为sum - k的位置。
+            if (map.containsKey(sum - k)) {
+                count += map.get(sum - k);
             }
-            // 把前缀和 nums[0..i] 加入并记录出现次数
-            preSum.put(sum0_i, preSum.getOrDefault(sum0_i, 0) + 1);
+            // 更新哈希表
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
         }
-        return res;
+        return count;
     }
 
     public static void main(String[] args) {
