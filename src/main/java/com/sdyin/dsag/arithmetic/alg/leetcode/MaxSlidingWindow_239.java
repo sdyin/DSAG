@@ -32,6 +32,46 @@ public class MaxSlidingWindow_239 {
         }
         return list.stream().mapToInt(Integer::valueOf).toArray();
     }
+
+
+    /**
+     * 单调队列解法
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] maxSlidingWindow2(int[] nums, int k) {
+        int length = nums.length;
+        int[] res = new int[length - k + 1];
+        // 双端队列
+        // 存储数组下标索引，保证队列中的索引对应的元素值是单调递减的，也就是维护单调性
+        // 注意： 这里的单调性不是索引下标的的单调性， 是通过比较数组索引下标对应值的大小来维护的，也就是说双端队列索引下标没有单调性，是索引下标对应值有单调性
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+
+        for (int i = 0; i < length; i++) {
+            // 超过最左边界的索引，需要移除队首元素
+            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {
+                deque.pollFirst();
+            }
+
+            // 保证队列中的索引对应的元素值是单调递减的
+            // 最后的元素值小于当前元素值，循环移除队尾元素
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
+            }
+
+            // 队尾加入当前元素索引： 因为维护的是单调递减队列
+            deque.offerLast(i);
+
+            // 当i >= k-1时，说明窗口已经形成，每次移动窗口，只需要取队首元素即可
+            if (i >= k-1) {
+                res[i - k + 1] = nums[deque.peekFirst()];
+            }
+        }
+
+        return res;
+    }
 }
 
 /**
