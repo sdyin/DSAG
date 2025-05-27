@@ -12,7 +12,7 @@ package com.sdyin.dsag.arithmetic.alg.leetcode;
  */
 public class Flatten114 {
 
-    // 分解方式解决问题
+    // 分解方式解决问题(递归)
     // 定义：将以 root 为根的树拉平为链表
     public void flatten2(TreeNode root) {
         if (root == null) {
@@ -33,36 +33,39 @@ public class Flatten114 {
         while (p.right != null) {
             p = p.right;
         }
+        // 原左子树拼接完毕后，左子树接回右子树
         p.right = right;
     }
 
 
-
-
-
-
-    static TreeNode node = new TreeNode(-1);
-    //1.遍历方式解决问题
+    /**
+     * 迭代方式求解
+     *
+     * @param root
+     */
     public static  void flatten(TreeNode root) {
-        if (root == null) {
-            return;
+        TreeNode curr = root;
+        while (curr != null) {
+            if (curr.left != null) {
+                // 找到当前节点 curr 左子树的最右侧节点（即左子树中最后一个会被前序遍历到的节点）
+                TreeNode pre = curr.left;
+                while (pre.right != null) {
+                    pre = pre.right;
+                }
+
+                // 这个节点是 curr 左子树的“前驱节点”，在展开后的链表中，它应该指向 curr 的原始右子树。
+                // 将右子树挂到前驱节点的右侧
+                pre.right = curr.right;
+
+                // 移动左子树到右子树位置
+                curr.right = curr.left;
+                curr.left = null;
+            }
+            curr = curr.right;
         }
-        TreeNode dummy = node;
-        expand(root);
-        root = dummy.right;
     }
 
-    private static void expand(TreeNode root) {
-        if (root == null) {
-            return;
-        }
-        node.right = new TreeNode(root.val);
-        node = node.right;
 
-        expand(root.left);
-        expand(root.right);
-
-    }
 
     public static void main(String[] args) {
         final TreeNode treeNode3 = new TreeNode(3);
