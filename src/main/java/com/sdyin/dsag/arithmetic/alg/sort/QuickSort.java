@@ -30,6 +30,7 @@ public class QuickSort {
      */
     private static int[] quickSort(int[] arr, int left, int right) {
         if (left < right) {
+            // 找到基准值，基准值左边的都小于基准值，右边的都大于基准值
             int partitionIndex = partition(arr, left, right);
             quickSort(arr, left, partitionIndex - 1);
             // 右节点需要间隔基准值所在下标索引 + 1，不然每次右节点会死循环递归
