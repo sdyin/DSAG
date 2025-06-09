@@ -72,4 +72,61 @@ public class MergeSort {
 
         return result;
     }
+
+
+    /**
+     * 归并排序- 解法二
+     *
+     * @param arr
+     */
+    public static void mergeSort(int[] arr) {
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
+        int[] temp = new int[arr.length];
+        mergeSort(arr, 0, arr.length - 1, temp);
+    }
+
+    public static void mergeSort(int[] arr, int left, int right, int[] temp) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            // 递归排序左半部分
+            // 注意这里是mid, 为什么不是mid-1 ？
+            // 归并排序将 mid 明确划归左半部分，这样分区是 [left, mid] 和 [mid+1, right]，确保每个元素都被处理且不重复
+            mergeSort(arr, left, mid, temp);
+            // 递归排序右半部分
+            mergeSort(arr, mid + 1, right, temp);
+
+            // 合并两个有序子数组
+            merge(arr, left, mid, right, temp);
+        }
+    }
+
+
+    public static void merge(int[] arr, int left, int mid, int right, int[] temp) {
+        int i = left;     // 左子数组起始索引
+        int j = mid + 1;  // 右子数组起始索引
+        int k = 0;        // 临时数组索引
+
+        // 合并两个有序子数组
+        while (i <= mid && j <= right) {
+            if (arr[i] <= arr[j]) {
+                temp[k++] = arr[i++];
+            } else {
+                temp[k++] = arr[j++];
+            }
+        }
+
+
+        // 将剩余元素拷贝到临时数组
+        while (i <= mid) {
+            temp[k++] = arr[i++];
+        }
+        while (j <= right) {
+            temp[k++] = arr[j++];
+        }
+
+        // 将临时数组中的元素拷贝回原数组
+        System.arraycopy(temp, 0, arr, left, right - left + 1);
+    }
 }
