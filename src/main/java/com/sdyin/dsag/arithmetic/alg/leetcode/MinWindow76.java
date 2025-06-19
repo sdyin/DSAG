@@ -67,4 +67,65 @@ public class MinWindow76 {
         }
         return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
     }
+
+
+    public String minWindow2(String s, String t) {
+
+        if (s == null || t == null || s.isEmpty() || t.isEmpty() || s.length() < t.length()) {
+            return "";
+        }
+
+        // 定义一个hashmap 存储t的字符和个数
+        HashMap<Character, Integer> need = new HashMap<>();
+
+        // 初始化need
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+
+        // 左闭右开区间
+        int left = 0, right = 0;
+        // 需要匹配的字符总数
+        int count = t.length();
+        // 最少字符长度
+        int minLen = Integer.MAX_VALUE;
+        // 最小左边界， 因为最后要返回符合的子串，所以需要记录左边界
+        int minLeft = 0;
+
+        // 扩大窗口
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            // 如果当前字符在目标中，减少计数
+            if (need.containsKey(c)) {
+                if (need.get(c) > 0) {
+                    count--;
+                }
+                need.put(c, need.get(c) - 1);
+            }
+
+            // 窗口左闭右开，所以这里是right++
+            // 如果是while (right < s.length()) 循环末尾，缩小窗口逻辑时，right 还没有加1。对应的是左闭右闭。
+            right++;
+
+            // 当所有字符都匹配时，缩小窗口
+            while (count == 0) {
+                // 判断是否需要更新最优解：更新最小长度和最小左边界
+                if (right - left < minLen) {
+                    minLen = right - left;
+                    minLeft = left;
+                }
+                char d = s.charAt(left);
+                // 如果移出的字符在目标中，增加计数
+                if (need.containsKey(d)) {
+                    need.put(d, need.get(d) + 1);
+                    if (need.get(d) > 0) {
+                        count++;
+                    }
+                }
+                left++;
+            }
+        }
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(minLeft, minLeft + minLen);
+    }
 }
