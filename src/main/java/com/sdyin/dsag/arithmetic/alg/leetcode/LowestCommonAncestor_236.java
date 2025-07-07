@@ -40,4 +40,29 @@ public class LowestCommonAncestor_236 {
         // 左子树或者右子树包含p和q, 或者 当前节点本身就是p或者q
         return lson || rson || (root.val == p.val || root.val == q.val);
     }
+
+
+    /**
+     * 时间复杂度 O(N)
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+        // 左右节点递归查找
+        TreeNode left = lowestCommonAncestor2(root.left, p, q);
+        TreeNode right = lowestCommonAncestor2(root.right, p, q);
+
+        // 左右节点都不为空，该节点就是LCA
+        if (left != null && right != null) {
+            return root;
+        }
+        // 只有一边找到了，返回找到的那边
+        // 如果左右节点都没找到，则返回null
+        return left != null ? left : right;
+    }
 }
