@@ -13,25 +13,27 @@ import java.util.Map;
  */
 public class PathSum_437 {
 
-    int count = 0;
-
     /**
-     * bfs + dfs 解法, 测试用例可能有整形溢出问题，超出了int 边界
+     * bfs + dfs 解法
+     * 时间复杂度：O(n²)，空间复杂度：O(n)
+     * bfs 遍历每个节点，dfs 计算以当前节点为起点的路径数, 总访问次数 = N + (N-1) + (N-2) + ... + 1 = N(N+1)/2 = O(N²)
      * @param root
      * @param targetSum
      * @return
      */
     public int pathSum(TreeNode root, int targetSum) {
         if (root == null) {
-            return count;
+            return 0;
         }
+        int totalCount = 0;
         LinkedList<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
 
         // 以每个节点为根节点进行遍历匹配
-        while (queue.size() > 0) {
+        while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
-            sum(node, targetSum, 0);
+            // 计算以当前节点为起点的路径数
+            totalCount += countPathsFromRoot(node, targetSum, 0L);;
 
             if (node.left != null) {
                 queue.offer(node.left);
@@ -41,7 +43,7 @@ public class PathSum_437 {
             }
         }
 
-        return count;
+        return totalCount;
     }
 
     /**
@@ -50,17 +52,26 @@ public class PathSum_437 {
      * @param node
      * @param targetSum
      * @param currentSum
+     * @return int
      */
-    private void sum(TreeNode node, int targetSum, int currentSum) {
-        if (node.val + currentSum == targetSum) {
+    private int countPathsFromRoot(TreeNode node, int targetSum, long currentSum) {
+        if (node == null) {
+            return 0;
+        }
+
+        int count = 0;
+        currentSum += node.val;
+
+        // 检查当前路径是否满足条件
+        if (currentSum == targetSum) {
             count++;
         }
-        if (node.left != null) {
-            sum(node.left, targetSum, node.val + currentSum);
-        }
-        if (node.right != null) {
-            sum(node.right, targetSum, node.val + currentSum);
-        }
+
+        // 继续向下搜索
+        count += countPathsFromRoot(node.left, targetSum, currentSum);
+        count += countPathsFromRoot(node.right, targetSum, currentSum);
+
+        return count;
     }
 
     public static void main(String[] args) {
@@ -120,12 +131,19 @@ public class PathSum_437 {
     Map<Long, Long> preSum = new HashMap<>();
 
     /**
-     * 前缀和解法
+     * 前缀和 + 哈希表优化解法
+     * 时间复杂度：O(n)，空间复杂度：O(n)
+     *
+     * 前缀和解法每个节点只访问一次：
+     * 一次 DFS 遍历整棵树
+     * 每个节点处理时间为 O(1)（哈希表查找）
+     * 总时间复杂度 = O(N)
      * @param root
      * @param sum
      * @return
      */
     public int pathSum2(TreeNode root, int sum) {
+        // 前缀和为0的情况出现1次（空路径）
         preSum.put(0L, 1L);
         return (int)dfs(root, 0, sum);
     }
@@ -134,11 +152,17 @@ public class PathSum_437 {
         if (root == null) {
             return 0;
         }
+        // 更新当前路径和
         currSum += root.val;
+
+        // 检查是否存在前缀和，使得 currentSum - prefixSum = target
         long res = preSum.getOrDefault(currSum - target, 0L);
+        // 将当前前缀和加入map
         preSum.put(currSum, preSum.getOrDefault(currSum, 0L) + 1);
 
+        // 递归处理左右子树
         res += dfs(root.left, currSum, target) + dfs(root.right, currSum, target);
+        // 回溯：移除当前节点的前缀和（重要！）
         preSum.put(currSum, preSum.get(currSum) - 1);
         return res;
     }
