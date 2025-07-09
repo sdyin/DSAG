@@ -16,21 +16,31 @@ package com.sdyin.dsag.arithmetic.alg.leetcode;
 public class MaxPathSum124 {
 
     int res = Integer.MIN_VALUE;
+
     public int maxPathSum(TreeNode root) {
         max(root);
         return res;
     }
 
+    /**
+     * 返回值：是从当前 node 出发的单边最大贡献值，也就是 node.val + max(left, right)
+     * 全局变量res： 记录的是经过当前这个节点， 同时连上了它的左子树的一条路径和它的右子树的一条路径，形成一个「完整的路径段」的最大值
+     *
+     * 也就是该方法的返回值，是当前节点的最大贡献值，也就是单边最大路径！！！ 但是全局变量res记录的是当前节点的最大路径和！！
+     * @param root
+     * @return
+     */
     private int max(TreeNode root) {
         if (root == null) {
             return 0;
         }
         //递归左右节点，小于0时不选择则值为0
-        int left = Math.max(0,maxPathSum(root.left));
-        int right = Math.max(0,maxPathSum(root.right));
+        int left = Math.max(0, max(root.left));
+        int right = Math.max(0, max(root.right));
         //后序遍历位置: 最大值
+        // 当前节点的最大路径和 = 左 + 右 + 当前节点，即left + right + root.val
         res = Math.max(res, left + right + root.val);
-        //返回包含父节点的左子树或右子树,因为路径节点在一条路径序列中，至多出现一次
+        //重点：返回当前节点对上层的最大贡献值（只能选一边）
         return root.val + Math.max(left, right);
     }
 }
