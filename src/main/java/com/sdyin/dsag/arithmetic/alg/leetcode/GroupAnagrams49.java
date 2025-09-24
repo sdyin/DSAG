@@ -44,6 +44,8 @@ public class GroupAnagrams49 {
             // 排序后作为key
             Arrays.sort(chars);
             String key = new String(chars);
+            // 更优雅的方式
+            // map.computeIfAbsent(key, k -> new ArrayList<>()).add(str);
             if (!map.containsKey(key)) {
                 List<String> list = new ArrayList<>();
                 list.add(str);

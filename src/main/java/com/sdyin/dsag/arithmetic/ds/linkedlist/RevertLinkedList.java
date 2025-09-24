@@ -105,6 +105,28 @@ public class RevertLinkedList {
         return next;
     }
 
+    /**
+     * 更简洁的递归方式
+     *
+     * @param head
+     * @return
+     */
+    public ListNode byRecursion3(ListNode head) {
+        // 为空或者只有一个节点时，直接返回
+        if (head == null || head.next == null) {
+            return head;
+        }
+        // 递归调用，传入下一个节点，目的是为了到达最后一个节点
+        ListNode newHead = byRecursion3(head.next);
+
+        // 将当前节点的下一个节点的 next 指针指向当前节点,
+        // 反转当前节点和下一节点的指针
+        head.next.next = head;
+        // 断开当前节点的 next 指针，防止链表成环
+        head.next = null;
+        return newHead;
+    }
+
 
 
 
